@@ -1,3 +1,6 @@
 .vscode
 dockerfiles
 Dockerfile
+build.sh
+README.md
+srvexec-*

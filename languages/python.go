@@ -21,11 +21,12 @@ func executePython(j common.ToExecute) (common.Status, string) {
 	if j.Code == "" {
 		return common.ErrorCompile, "No code"
 	} else {
-		out, err := exec.Command("python", "-c", j.Code).Output()
+		common.Format("CODE", j.Context+"\n"+j.Code, "python")
+		out, err := exec.Command("python", "-c", j.Context+"\n"+j.Code).CombinedOutput()
 
 		if err != nil {
-			fmt.Printf("Exec Error: %s\n", err)
-			return common.ErrorExec, err.Error()
+			common.Format("OUTPUT", string(out), "raw")
+			return common.ErrorExec, string(out)
 		}
 
 		return common.Ok, string(out)

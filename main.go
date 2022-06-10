@@ -4,7 +4,7 @@ package main
 
 import (
 	"srvexec/common"
-	// "srvexec/languages"
+	"srvexec/languages"
 )
 
 func main() {

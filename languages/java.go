@@ -1,5 +1,4 @@
 //go:build java
-// +build java
 
 package languages
 
@@ -10,12 +9,12 @@ import (
 
 var (
 	MainLanguage = common.Language{
-		Name: "python",
-		Exec: execute,
+		Name: "java",
+		Exec: executeJava,
 	}
 )
 
-func execute(j common.ToExecute) (common.Status, string) {
+func executeJava(j common.ToExecute) (common.Status, string) {
 	fmt.Printf("Execute java with %#v\n", j)
 
 	if j.Code == "" {

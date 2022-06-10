@@ -1,0 +1,6 @@
+{
+    "go.buildTags": "python",
+    "go.buildFlags": [
+        "-tags=python",
+    ],
+}

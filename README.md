@@ -27,6 +27,6 @@ docker run --rm --name srvexec-python -p 8080:8080 srvexec:python
 Le header `Content-Type` est important.
 
 ```bash
-curl -X POST http://localhost:8080/exec -d '{"code": "print(f\"Hello {hex(3735928559)[2:]}\")\nprint", "context": "import math"}' -H 'Content-Type: application/json' -s
+curl -X POST http://localhost:8080/exec -d '{"code": "print(f\"Hello {hex(3735928559)[2:]}, e^3={math.exp(3)}\")", "context": "import math"}' -H 'Content-Type: application/json' -s
 ```
 

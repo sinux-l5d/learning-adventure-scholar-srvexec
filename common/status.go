@@ -8,6 +8,7 @@ const (
 	Nok
 	ErrorCompile
 	ErrorExec
+	ErrorInternal
 )
 
 func (s Status) String() string {
@@ -20,6 +21,8 @@ func (s Status) String() string {
 		return "error_compile"
 	case ErrorExec:
 		return "error_exec"
+	case ErrorInternal:
+		return "error_internal"
 	default:
 		return "undefined"
 	}

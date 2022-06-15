@@ -1,6 +1,6 @@
-//go:build java
+//go:build java_generic
 
-package languages
+package environments
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	MainLanguage = common.Language{
+	MainEnvironments = common.Environment{
 		Name: "java",
 		Exec: executeJava,
 	}

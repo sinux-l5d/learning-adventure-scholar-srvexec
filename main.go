@@ -4,10 +4,10 @@ package main
 
 import (
 	"srvexec/common"
-	"srvexec/languages"
+	"srvexec/environments"
 )
 
 func main() {
-	app := common.Webserver(languages.MainLanguage.Exec)
+	app := common.Webserver(environments.MainEnvironments.Exec)
 	app.Listen(":8080")
 }

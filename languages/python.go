@@ -1,34 +1,15 @@
-//go:build python
+//go:build libpython
 
 package languages
 
-import (
-	"fmt"
-	"os/exec"
-	"srvexec/common"
-)
+import "strings"
 
-var (
-	MainLanguage = common.Language{
-		Name: "python",
-		Exec: executePython,
+func Indent(code string, indent int) string {
+	codeEtu := strings.Split(code, "\n")
+
+	for i, row := range codeEtu {
+		codeEtu[i] = strings.Repeat("\t", indent) + row
 	}
-)
 
-func executePython(j common.ToExecute) (common.Status, string) {
-	fmt.Printf("Execute python with %#v\n", j)
-
-	if j.Code == "" {
-		return common.ErrorCompile, "No code"
-	} else {
-		common.Format("CODE", j.Context+"\n"+j.Code, "python")
-		out, err := exec.Command("python", "-c", j.Context+"\n"+j.Code).CombinedOutput()
-
-		if err != nil {
-			common.Format("OUTPUT", string(out), "raw")
-			return common.ErrorExec, string(out)
-		}
-
-		return common.Ok, string(out)
-	}
+	return strings.Join(codeEtu, "\n")
 }

@@ -1,5 +1,9 @@
 # Service d'Exécution
 
+Se service exécute du code informatique dans un langage parmis une liste implémentée.
+
+Il a besoin d'un Exercice (voir `common/structs.go`) et du code à exécuter.
+
 ## Compilation manuel
 
 ```bash

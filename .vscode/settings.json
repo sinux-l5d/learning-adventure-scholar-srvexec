@@ -1,6 +1,6 @@
 {
-    "go.buildTags": "python",
+    "go.buildTags": "python_generic,libpython",
     "go.buildFlags": [
-        "-tags=python",
+        "-tags=python_generic,libpython",
     ],
 }

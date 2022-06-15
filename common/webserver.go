@@ -2,6 +2,7 @@ package common
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
@@ -32,6 +33,8 @@ func Webserver(fn Executor) *fiber.App {
 		EnableStackTrace:  true,
 		StackTraceHandler: recover.ConfigDefault.StackTraceHandler,
 	}))
+
+	app.Use(logger.New())
 
 	app.Post("/exec", execFactory(fn))
 

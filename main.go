@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	app := common.Webserver(environments.MainEnvironments.Exec)
+	app := common.Webserver(environments.MainEnvironments.Handler)
 	app.Listen(":8080")
 }

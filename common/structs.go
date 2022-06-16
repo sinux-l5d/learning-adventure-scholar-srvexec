@@ -3,7 +3,7 @@ package common
 import "encoding/json"
 
 // Une fonction de type Executor prend en paramètre un code à évaluer et un exercice, et renvoie un status et des logs (optionels).
-type Executor func(j ToExecute) (s Status, log string)
+type Handler func(j ToHandle) (s Status, log string)
 
 type Exercice struct {
 	Id          string          `json:"id"`
@@ -50,18 +50,18 @@ func (e *Exercice) UnmarshalContexte(ctx interface{}) error {
 // Environnement pour exécuter du code
 type Environment struct {
 	Name string
-	Exec Executor
+	Handler
 }
 
 // Code à exécuter en fonction d'un exercice
-type ToExecute struct {
+type ToHandle struct {
 	Code     string   `json:"code"`
 	Exercice Exercice `json:"exercice"`
 }
 
 // Étant donné une chaîne JSON, renvoie un pointeur vers une structure ToExecute ou une erreur.
-func NewToExecute(data string) (*ToExecute, error) {
-	var toExec ToExecute
+func NewToExecute(data string) (*ToHandle, error) {
+	var toExec ToHandle
 	if err := json.Unmarshal([]byte(data), &toExec); err != nil {
 		return nil, err
 	}

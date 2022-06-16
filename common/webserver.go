@@ -6,10 +6,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 )
 
-func execFactory(fn Executor) func(c *fiber.Ctx) error {
+func execFactory(fn Handler) func(c *fiber.Ctx) error {
 	return func(c *fiber.Ctx) error {
 
-		var j ToExecute
+		var j ToHandle
 
 		if err := c.BodyParser(&j); err != nil {
 			return c.Status(fiber.ErrBadRequest.Code).JSON(fiber.Map{"error": err.Error()})
@@ -26,7 +26,7 @@ func execFactory(fn Executor) func(c *fiber.Ctx) error {
 	}
 }
 
-func Webserver(fn Executor) *fiber.App {
+func Webserver(fn Handler) *fiber.App {
 	app := fiber.New()
 
 	app.Use(recover.New(recover.Config{

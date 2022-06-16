@@ -10,8 +10,8 @@ import (
 
 var (
 	MainEnvironments = common.Environment{
-		Name: "python-generic",
-		Exec: executePython,
+		Name:    "python-generic",
+		Handler: handlePython,
 	}
 )
 
@@ -21,7 +21,7 @@ type contextPython struct {
 	Indent     int    `json:"indent"`
 }
 
-func executePython(j common.ToExecute) (common.Status, string) {
+func handlePython(j common.ToHandle) (common.Status, string) {
 	if j.Code == "" {
 		return common.ErrorCompile, "No code"
 	}

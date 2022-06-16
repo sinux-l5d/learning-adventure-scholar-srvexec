@@ -3,8 +3,6 @@
 package environments
 
 import (
-	"encoding/json"
-	"fmt"
 	"os/exec"
 	"srvexec/common"
 	"srvexec/languages"
@@ -31,8 +29,8 @@ func executePython(j common.ToExecute) (common.Status, string) {
 	// Convertion du json en struct
 	var ctx contextPython
 
-	if err := json.Unmarshal(j.Exercice.Contexte, &ctx); err != nil {
-		return common.ErrorInternal, fmt.Sprintf("Error unmarshalling context: %s", err)
+	if j.Exercice.UnmarshalContexte(&ctx) != nil {
+		return common.ErrorInternal, "Error unmarshalling context"
 	}
 
 	// Indendation optionel du code
@@ -44,10 +42,9 @@ func executePython(j common.ToExecute) (common.Status, string) {
 
 	out, err := exec.Command("python", "-c", codeFinal).CombinedOutput()
 
-	common.Format("INPUT", codeFinal, "py")
-	common.Format("OUTPUT", string(out), "raw")
 	if err != nil {
 		return common.ErrorExec, string(out)
 	}
+
 	return common.Ok, string(out)
 }

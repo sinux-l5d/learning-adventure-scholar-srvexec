@@ -7,14 +7,14 @@ ARG EXEC_ENV
 WORKDIR /app
 
 COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+RUN go mod download && go mod verify && apk add bash
 
 COPY . .
 # Make the binary static
 # ENV CGO_ENABLED=0 
 # RUN go build -v -o srvexec_${EXEC_NAME} -tags ${EXEC_NAME},lib${EXEC_LANG} .
 
-RUN ./build.sh bin -l ${EXEC_ENV}
+RUN ./build.sh bin -l $EXEC_ENV
 
 
 FROM scratch as runtime

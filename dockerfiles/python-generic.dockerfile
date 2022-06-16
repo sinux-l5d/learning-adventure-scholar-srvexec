@@ -1,4 +1,4 @@
-FROM srvexec:bin-python as runtime
+FROM srvexec:bin-python-generic as runtime
 FROM python:3.10-slim as executor
 
 WORKDIR /app

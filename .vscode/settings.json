@@ -3,4 +3,5 @@
     "go.buildFlags": [
         "-tags=python_generic,libpython",
     ],
+    "docwriter.language": "French",
 }

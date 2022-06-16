@@ -1,7 +1,5 @@
 package main
 
-// Proxy
-
 import (
 	"srvexec/common"
 	"srvexec/environments"

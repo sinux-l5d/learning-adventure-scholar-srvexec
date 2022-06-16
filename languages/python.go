@@ -4,6 +4,7 @@ package languages
 
 import "strings"
 
+// Indente un `code` multiligne d'un nombre `indent` de tabulations
 func Indent(code string, indent int) string {
 	codeEtu := strings.Split(code, "\n")
 

@@ -41,7 +41,7 @@ to_dash() {
 
 sub_help() {
     echo "Usage: $PROGNAME (container|bin) -l <environment> [-l <environment2> ...]"
-    echo "e.g.: $PROGNAME -l python-generic -l java-generic"
+    echo "e.g.: $PROGNAME bin -l python-generic -l java-generic"
 }
 
 sub_container() {

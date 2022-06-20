@@ -3,7 +3,6 @@
 package environments
 
 import (
-	"os/exec"
 	"srvexec/common"
 	"srvexec/languages"
 )
@@ -40,7 +39,7 @@ func handlePython(j common.ToHandle) (common.Status, string) {
 
 	codeFinal := ctx.BeforeCode + codeEtu + ctx.AfterCode
 
-	out, err := exec.Command("python", "-c", codeFinal).CombinedOutput()
+	out, err := languages.Execute(codeFinal)
 
 	if err != nil {
 		return common.ErrorExec, string(out)

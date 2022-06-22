@@ -7,5 +7,5 @@ import (
 
 func main() {
 	app := common.Webserver(environments.MainEnvironments.Handler)
-	app.Listen(":8080")
+	common.LogFatal(app.Listen("localhost:8080").Error())
 }

@@ -63,11 +63,12 @@ func LogFatal(msg string) {
 }
 
 // Entoure un string multiligne au format markdown
-// Pas de retour à la ligne à la fin.
+// Si debug : renvoie sous forme de base64, sans "\n"
+// sinon : renvoie sous forme de string, avec "\n" au début
 func WrapMultiline(multiline string, lang string) string {
 	if LogLevel == "debug" {
 		return fmt.Sprint("\n```" + lang + "\n" + multiline + "\n```")
 	} else {
-		return base64.StdEncoding.EncodeToString([]byte("\n```" + lang + "\n" + multiline + "\n```"))
+		return base64.StdEncoding.EncodeToString([]byte("```" + lang + "\n" + multiline + "\n```"))
 	}
 }

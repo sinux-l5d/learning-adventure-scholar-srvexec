@@ -16,7 +16,9 @@ func execFactory(fn Handler) func(c *fiber.Ctx) error {
 			// return err
 		}
 
-		status, out := fn(j)
+		out, status := fn(j)
+
+		c.Status(status.HttpCode())
 
 		c.JSON(map[string]interface{}{
 			"status": status.String(),

@@ -20,7 +20,7 @@ type contextPython struct {
 	Indent     int    `json:"indent"`
 }
 
-func handlePython(j common.ToHandle) (common.Status, string) {
+func handlePython(j common.ToHandle) (string, common.Status) {
 	if j.Code == "" {
 		return common.ErrorCompile, "No code"
 	}
@@ -42,8 +42,8 @@ func handlePython(j common.ToHandle) (common.Status, string) {
 	out, err := languages.Execute(codeFinal)
 
 	if err != nil {
-		return common.ErrorExec, string(out)
+		return string(out), common.ErrorExec
 	}
 
-	return common.Ok, string(out)
+	return string(out), common.Ok
 }

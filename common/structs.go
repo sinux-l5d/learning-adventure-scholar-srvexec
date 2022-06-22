@@ -3,7 +3,7 @@ package common
 import "encoding/json"
 
 // Une fonction de type Executor prend en paramètre un code à évaluer et un exercice, et renvoie un status et des logs (optionels).
-type Handler func(j ToHandle) (s Status, log string)
+type Handler func(j ToHandle) (log string, s Status)
 
 type Exercice struct {
 	Id          string          `json:"id"`

@@ -27,3 +27,20 @@ func (s Status) String() string {
 		return "undefined"
 	}
 }
+
+func (s Status) HttpCode() int {
+	switch s {
+	case Ok:
+		return 200
+	case Nok:
+		return 400
+	case ErrorCompile:
+		return 400
+	case ErrorExec:
+		return 400
+	case ErrorInternal:
+		return 500
+	default:
+		return 500
+	}
+}

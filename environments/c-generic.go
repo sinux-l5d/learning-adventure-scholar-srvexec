@@ -15,7 +15,8 @@ var (
 )
 
 type contextC struct {
-	Libs []string `json:"libs"`
+	Libs         []string `json:"libs"`
+	CompileFlags []string `json:"compileFlags"`
 }
 
 func handleC(j common.ToHandle) (string, common.Status) {
@@ -33,7 +34,7 @@ func handleC(j common.ToHandle) (string, common.Status) {
 	// Ajoute les libs au code
 	codeFinal := languages.FormatLibs(ctx.Libs) + j.Code
 
-	out, err := languages.Execute(codeFinal)
+	out, err := languages.Execute(codeFinal, ctx.CompileFlags)
 
 	if err != common.Ok {
 		return out, err

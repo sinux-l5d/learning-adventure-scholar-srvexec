@@ -27,11 +27,10 @@ func init() {
 	WarnLogger = log.New(os.Stdout, prefix("WARN"), flags)
 	ErrLogger = log.New(os.Stderr, prefix("ERROR"), flags)
 
-	InfoLogger.Println("Logger initialized")
 	if LogLevel == "" {
 		LogLevel = "info"
 	}
-	InfoLogger.Println("Log level:", LogLevel)
+	InfoLogger.Println("Logger initialized with level " + LogLevel)
 }
 
 func LogDebug(msg string) {

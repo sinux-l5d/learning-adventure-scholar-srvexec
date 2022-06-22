@@ -13,7 +13,7 @@ import (
 // Le code est passé via stdin, et mis dans un fichier temporaire.
 // Le fichier temporaire est nommé avec un hash du code initiale,
 // et est supprimé après l'exécution.
-func Execute(code string) (string, common.Status) {
+func Execute(code string, flags []string) (string, common.Status) {
 	// Hash du code, pour le nom du fichier
 	h := common.Hash(code)
 	prefix := func(msg string) string {
@@ -22,8 +22,10 @@ func Execute(code string) (string, common.Status) {
 
 	common.LogInfo(prefix("Received code : " + common.WrapMultiline(code, "c")))
 
+	// Make args
+	args := append([]string{"-x", "c", "-", "-o", h + ".out"}, flags...)
 	// Configure gcc
-	gcc := exec.Command("gcc", "-x", "c", "-", "-o", h+".out")
+	gcc := exec.Command("gcc", args...)
 	defer os.Remove(h + ".out")
 	defer common.LogInfo(prefix("Removed file"))
 

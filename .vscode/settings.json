@@ -1,7 +1,7 @@
 {
-    "go.buildTags": "python_generic,libpython",
+    "go.buildTags": "c_generic,libc",
     "go.buildFlags": [
-        "-tags=python_generic,libpython",
+        "-tags=c_generic,libc",
     ],
     "docwriter.language": "French",
 }

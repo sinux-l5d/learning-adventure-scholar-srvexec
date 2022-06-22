@@ -58,13 +58,3 @@ type ToHandle struct {
 	Code     string   `json:"code"`
 	Exercice Exercice `json:"exercice"`
 }
-
-// Étant donné une chaîne JSON, renvoie un pointeur vers une structure ToExecute ou une erreur.
-func NewToExecute(data string) (*ToHandle, error) {
-	var toExec ToHandle
-	if err := json.Unmarshal([]byte(data), &toExec); err != nil {
-		return nil, err
-	}
-
-	return &toExec, nil
-}

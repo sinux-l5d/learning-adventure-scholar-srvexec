@@ -47,8 +47,8 @@ if [ $MODE = "dev" ]; then
     air -build.cmd="$AIR_BUILD_CMD"
 elif [ $MODE = "bin" ]; then
     require go
-    log "Running binary with tags $ENVIRONMENT and lib$LANGUAGE"
-    go run -tags $ENVIRONMENT,lib$LANGUAGE .
+    log "Running binary with tags $(to_underscore $ENVIRONMENT) and lib$LANGUAGE"
+    go run -tags $(to_underscore $ENVIRONMENT),lib$LANGUAGE .
 elif [ $MODE = "container" ]; then
     require docker
 

@@ -7,4 +7,6 @@ COPY --from=runtime /srvexec-python-generic ./srvexec-python-generic
 
 EXPOSE 8080
 
+ENV SRVEXEC_LISTEN=0.0.0.0
+ENV SRVEXEC_PORT=8080
 ENTRYPOINT [ "./srvexec-python-generic" ]

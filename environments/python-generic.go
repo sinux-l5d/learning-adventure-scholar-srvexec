@@ -22,14 +22,14 @@ type contextPython struct {
 
 func handlePython(j common.ToHandle) (string, common.Status) {
 	if j.Code == "" {
-		return common.ErrorCompile, "No code"
+		return "No code", common.ErrorCompile
 	}
 
 	// Convertion du json en struct
 	var ctx contextPython
 
 	if j.Exercice.UnmarshalContexte(&ctx) != nil {
-		return common.ErrorInternal, "Error unmarshalling context"
+		return "Error unmarshalling context", common.ErrorInternal
 	}
 
 	// Indendation optionel du code

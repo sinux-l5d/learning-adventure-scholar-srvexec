@@ -3,6 +3,7 @@
 package environments
 
 import (
+	"fmt"
 	"srvexec/common"
 	"srvexec/languages"
 )
@@ -28,7 +29,8 @@ func handlePython(j common.ToHandle) (string, common.Status) {
 	// Convertion du json en struct
 	var ctx contextPython
 
-	if j.Exercice.UnmarshalContexte(&ctx) != nil {
+	if err := j.Exercice.UnmarshalContexte(&ctx); err != nil {
+		fmt.Println("Error while unmarshalling context", err)
 		return "Error unmarshalling context", common.ErrorInternal
 	}
 

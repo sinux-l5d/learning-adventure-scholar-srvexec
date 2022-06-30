@@ -38,7 +38,7 @@ func Execute(code string, flags []string) (string, common.Status) {
 
 	// On regarde si la compilation a échoué
 	if err != nil {
-		common.LogError(prefix("Compilation error: " + common.WrapMultiline(string(out), "output")))
+		common.LogError(prefix("Compilation error: " + common.WrapMultiline(string(out)+"\n"+err.Error(), "output")))
 		return string(out), common.ErrorCompile
 	}
 

@@ -59,7 +59,7 @@ elif [ $MODE = "container" ]; then
     [ $? -ne 0 ] && exit 1
 
     log "Running container with $ENVIRONMENT"
-    docker run --rm --name srvexec-$ENVIRONMENT -p 8080:8080 srvexec:$ENVIRONMENT
+    docker run --rm --name srvexec-$ENVIRONMENT --memory 50mb -p 8080:8080 srvexec:$ENVIRONMENT
 else
     echo 'Invalid mode!'
     usage

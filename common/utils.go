@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// Hash un string avec sha1 et le temps actuelle
 func Hash(s string) string {
 	timeBytes := []byte(fmt.Sprintf("%d", time.Now().Unix()))
 	toHash := append([]byte(s), timeBytes...)
@@ -15,10 +16,13 @@ func Hash(s string) string {
 	return fmt.Sprintf("%x", sha1.Sum(toHash))
 }
 
+// Retourne un context avec un timeout
 func GetTimeoutCtx(duration time.Duration) (context.Context, context.CancelFunc) {
 	return context.WithTimeout(context.Background(), duration)
 }
 
+// Retourne la durée du timeout défini dans l'environnement,
+// ou la durée par défaut (5 secondes)
 func GetTimeoutEnv() time.Duration {
 	tstr := os.Getenv("SRVEXEC_TIMEOUT")
 

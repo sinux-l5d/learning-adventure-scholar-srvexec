@@ -3,6 +3,7 @@
 package languages
 
 import (
+	"context"
 	"os"
 	"os/exec"
 	"srvexec/common"
@@ -16,6 +17,8 @@ import (
 func Execute(code string, flags []string) (string, common.Status) {
 	// Hash du code, pour le nom du fichier
 	h := common.Hash(code)
+
+	// Prefix des logs incorporant le hash
 	prefix := func(msg string) string {
 		return "[" + h + "] " + msg
 	}
@@ -42,9 +45,21 @@ func Execute(code string, flags []string) (string, common.Status) {
 		return string(out), common.ErrorCompile
 	}
 
+	// On défini le timeout d'exécution
+	ctx, cancel := common.GetTimeoutCtx(common.GetTimeoutEnv())
+	defer cancel()
+
 	// On lance l'exécution du binnaire créé
 	common.LogInfo(prefix("Executing"))
-	out, err = exec.Command("./" + h + ".out").CombinedOutput()
+	out, err = exec.CommandContext(ctx, "./"+h+".out").CombinedOutput()
+
+	// Timeout
+	if ctx.Err() == context.DeadlineExceeded {
+		// Command was killed
+		common.LogInfo("Command was killed")
+		common.LogDebug("Context error: %v | Command error: %v", ctx.Err(), err)
+		return "timeout", common.ErrorExec
+	}
 
 	// On regarde si l'exécution a échoué
 	if err != nil {

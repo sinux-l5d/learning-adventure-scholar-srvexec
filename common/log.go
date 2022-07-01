@@ -30,35 +30,35 @@ func init() {
 	if LogLevel == "" {
 		LogLevel = "info"
 	}
-	InfoLogger.Println("Logger initialized with level " + LogLevel)
+	InfoLogger.Printf("initialized with level " + LogLevel)
 }
 
-func LogDebug(msg string) {
+func LogDebug(a ...any) {
 	if LogLevel == "debug" {
-		DebugLogger.Println(msg)
+		DebugLogger.Printf(a[0].(string)+"\n", a[1:]...)
 	}
 }
 
-func LogInfo(msg string) {
+func LogInfo(a ...any) {
 	if LogLevel == "debug" || LogLevel == "info" {
-		InfoLogger.Println(msg)
+		InfoLogger.Printf(a[0].(string)+"\n", a[1:]...)
 	}
 }
 
-func LogWarn(msg string) {
+func LogWarn(a ...any) {
 	if LogLevel == "debug" || LogLevel == "info" || LogLevel == "warn" {
-		WarnLogger.Println(msg)
+		WarnLogger.Printf(a[0].(string)+"\n", a[1:]...)
 	}
 }
 
-func LogError(msg string) {
+func LogError(a ...any) {
 	if LogLevel == "debug" || LogLevel == "info" || LogLevel == "warn" || LogLevel == "error" {
-		ErrLogger.Println(msg)
+		ErrLogger.Printf(a[0].(string)+"\n", a[1:]...)
 	}
 }
 
-func LogFatal(msg string) {
-	ErrLogger.Fatalln(msg)
+func LogFatal(a ...any) {
+	ErrLogger.Fatalf(a[0].(string)+"\n", a[1:]...)
 }
 
 // Entoure un string multiligne au format markdown

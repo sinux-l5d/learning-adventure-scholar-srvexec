@@ -3,7 +3,6 @@
 package environments
 
 import (
-	"fmt"
 	"srvexec/common"
 	"srvexec/languages"
 )
@@ -30,7 +29,7 @@ func handlePython(j common.ToHandle) (string, common.Status) {
 	var ctx contextPython
 
 	if err := j.Exercice.UnmarshalContexte(&ctx); err != nil {
-		fmt.Println("Error while unmarshalling context", err)
+		common.LogError("Error while unmarshalling context: " + err.Error())
 		return "Error unmarshalling context", common.ErrorInternal
 	}
 
@@ -38,12 +37,12 @@ func handlePython(j common.ToHandle) (string, common.Status) {
 	codeEtu := languages.Indent(j.Code, ctx.Indent)
 
 	// Incorporation du contexte
-
 	codeFinal := ctx.BeforeCode + codeEtu + ctx.AfterCode
 
 	out, err := languages.Execute(codeFinal)
 
 	if err != nil {
+		common.LogError("Error while executing code: " + err.Error())
 		return string(out), common.ErrorExec
 	}
 

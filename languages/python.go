@@ -3,7 +3,9 @@
 package languages
 
 import (
+	"context"
 	"os/exec"
+	"srvexec/common"
 	"strings"
 )
 
@@ -18,7 +20,29 @@ func Indent(code string, indent int) string {
 	return strings.Join(codeEtu, "\n")
 }
 
+// Execute le code Python en utilisant python -c.
 func Execute(code string) (string, error) {
-	out, err := exec.Command("python", "-c", code).CombinedOutput()
+	// On kill le processus s'il dépasse le timeout
+	ctx, cancel := common.GetTimeoutCtx(common.GetTimeoutEnv())
+	defer cancel()
+
+	cmd := exec.CommandContext(ctx, "python", "-c", code)
+
+	out, err := cmd.CombinedOutput()
+
+	// Timeout
+	if ctx.Err() == context.DeadlineExceeded {
+		// Command was killed
+		common.LogInfo("Command was killed")
+		common.LogDebug("Context error: %v | Command error: %v", ctx.Err(), err)
+		return "timeout", ctx.Err()
+	}
+
+	// On regarde si l'exécution a échoué
+	if err != nil {
+		// Command error
+		common.LogError("Command error: %v | output: %s", err, common.WrapMultiline(string(out), "output"))
+	}
+
 	return string(out), err
 }

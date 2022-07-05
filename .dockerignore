@@ -3,3 +3,4 @@ dockerfiles
 Dockerfile
 README.md
 srvexec-*
+docker-compose.yml

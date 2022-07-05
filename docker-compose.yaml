@@ -1,0 +1,23 @@
+# Ce fichier est un exemple
+# Lancez ./build.sh container -l proxy -l python-generic avant docker compose up !
+version: "3.9"
+services:
+
+  proxy:
+    image: srvexec:proxy
+    container_name: srvexec-proxy
+    environment:
+      SRVEXEC_LOG_LEVEL: "debug"
+      SRVEXEC_LISTEN: "0.0.0.0"
+      SRVEXEC_PORT: "8080"
+      SRVEXEC_PROXY_ENV_PYTHON_GENERIC: http://python-generic:8080
+    ports:
+      - "3005:8080"
+  
+  python-generic:
+    image: srvexec:python-generic
+    container_name: srvexec-python-generic
+    environment:
+      SRVEXEC_LOG_LEVEL: "debug"
+      SRVEXEC_LISTEN: "0.0.0.0"
+      SRVEXEC_PORT: "8080"

@@ -22,7 +22,7 @@ func execFactory(fn Handler) func(c *fiber.Ctx) error {
 
 		c.Status(status.HttpCode())
 
-		c.JSON(map[string]interface{}{
+		c.JSON(map[string]string{
 			"status": status.String(),
 			"output": out,
 		})
@@ -30,7 +30,7 @@ func execFactory(fn Handler) func(c *fiber.Ctx) error {
 	}
 }
 
-func Webserver(fn Handler) *fiber.App {
+func Webserver(env Environment) *fiber.App {
 	app := fiber.New()
 
 	// recover from errors
@@ -53,7 +53,12 @@ func Webserver(fn Handler) *fiber.App {
 	}))
 
 	// Execute the code
-	app.Post("/exec", execFactory(fn))
+	app.Post("/exec", execFactory(env.Handler))
+
+	app.Get("/env", func(c *fiber.Ctx) error {
+		c.JSON(env.Name)
+		return nil
+	})
 
 	return app
 }

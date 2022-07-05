@@ -7,9 +7,10 @@ import (
 )
 
 func main() {
-	app := common.Webserver(environments.MainEnvironments.Handler)
+	app := common.Webserver(environments.MainEnvironments)
 
 	listen, set := os.LookupEnv("SRVEXEC_LISTEN")
+	// if set to "", it's ok : listen is optional
 	if !set {
 		listen = "127.0.0.1"
 	}

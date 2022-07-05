@@ -20,12 +20,12 @@ func init() {
 		return "[" + name + "] "
 	}
 
-	flags := log.Ldate | log.Ltime | log.Lshortfile
+	flags := log.Ldate | log.Ltime
 
-	DebugLogger = log.New(os.Stdout, prefix("DEBUG"), flags)
-	InfoLogger = log.New(os.Stdout, prefix("INFO"), flags)
-	WarnLogger = log.New(os.Stdout, prefix("WARN"), flags)
-	ErrLogger = log.New(os.Stderr, prefix("ERROR"), flags)
+	DebugLogger /**/ = log.New(os.Stdout, prefix("DEBUG"), flags)
+	InfoLogger /* */ = log.New(os.Stdout, prefix(" INFO"), flags)
+	WarnLogger /* */ = log.New(os.Stdout, prefix(" WARN"), flags)
+	ErrLogger /*  */ = log.New(os.Stderr, prefix("ERROR"), flags)
 
 	if LogLevel == "" {
 		LogLevel = "info"
@@ -33,32 +33,32 @@ func init() {
 	InfoLogger.Printf("initialized with level " + LogLevel)
 }
 
-func LogDebug(a ...any) {
+func LogDebug(format string, a ...any) {
 	if LogLevel == "debug" {
-		DebugLogger.Printf(a[0].(string)+"\n", a[1:]...)
+		DebugLogger.Printf(format+"\n", a...)
 	}
 }
 
-func LogInfo(a ...any) {
+func LogInfo(format string, a ...any) {
 	if LogLevel == "debug" || LogLevel == "info" {
-		InfoLogger.Printf(a[0].(string)+"\n", a[1:]...)
+		InfoLogger.Printf(format+"\n", a...)
 	}
 }
 
-func LogWarn(a ...any) {
+func LogWarn(format string, a ...any) {
 	if LogLevel == "debug" || LogLevel == "info" || LogLevel == "warn" {
-		WarnLogger.Printf(a[0].(string)+"\n", a[1:]...)
+		WarnLogger.Printf(format+"\n", a...)
 	}
 }
 
-func LogError(a ...any) {
+func LogError(format string, a ...any) {
 	if LogLevel == "debug" || LogLevel == "info" || LogLevel == "warn" || LogLevel == "error" {
-		ErrLogger.Printf(a[0].(string)+"\n", a[1:]...)
+		ErrLogger.Printf(format+"\n", a...)
 	}
 }
 
-func LogFatal(a ...any) {
-	ErrLogger.Fatalf(a[0].(string)+"\n", a[1:]...)
+func LogFatal(format string, a ...any) {
+	ErrLogger.Fatalf(format+"\n", a...)
 }
 
 // Entoure un string multiligne au format markdown

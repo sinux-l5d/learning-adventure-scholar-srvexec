@@ -44,3 +44,20 @@ func (s Status) HttpCode() int {
 		return 500
 	}
 }
+
+func StatusFromString(s string) Status {
+	switch s {
+	case "ok":
+		return Ok
+	case "nok":
+		return Nok
+	case "error_compile":
+		return ErrorCompile
+	case "error_exec":
+		return ErrorExec
+	case "error_internal":
+		return ErrorInternal
+	default:
+		return StatusUndefined
+	}
+}

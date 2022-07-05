@@ -1,5 +1,7 @@
 package common
 
+// Ce fichier est nommé avec un prefix "1_" pour être chargé et initialisé avant les autres fichiers, qui en ont besoin
+
 import (
 	"encoding/base64"
 	"fmt"
@@ -12,7 +14,7 @@ var (
 	InfoLogger  *log.Logger
 	WarnLogger  *log.Logger
 	ErrLogger   *log.Logger
-	LogLevel    = os.Getenv("SRVEXEC_LOG_LEVEL")
+	LogLevel    = "info" // Default value, real value loaded in env.go
 )
 
 func init() {
@@ -22,15 +24,12 @@ func init() {
 
 	flags := log.Ldate | log.Ltime
 
-	DebugLogger /**/ = log.New(os.Stdout, prefix("DEBUG"), flags)
-	InfoLogger /* */ = log.New(os.Stdout, prefix(" INFO"), flags)
-	WarnLogger /* */ = log.New(os.Stdout, prefix(" WARN"), flags)
-	ErrLogger /*  */ = log.New(os.Stderr, prefix("ERROR"), flags)
+	DebugLogger /**/ = log.New(os.Stdout, prefix(Colorize("DEBUG", Gray)), flags)
+	InfoLogger /* */ = log.New(os.Stdout, prefix(Colorize(" INFO", Blue)), flags)
+	WarnLogger /* */ = log.New(os.Stdout, prefix(Colorize(" WARN", Yellow)), flags)
+	ErrLogger /*  */ = log.New(os.Stderr, prefix(Colorize("ERROR", Red)), flags)
 
-	if LogLevel == "" {
-		LogLevel = "info"
-	}
-	InfoLogger.Printf("initialized with level " + LogLevel)
+	InfoLogger.Printf("loggers initialized with level " + LogLevel)
 }
 
 func LogDebug(format string, a ...any) {

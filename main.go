@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"srvexec/common"
 	"srvexec/environments"
 )
@@ -9,16 +8,15 @@ import (
 func main() {
 	app := common.Webserver(environments.MainEnvironments)
 
-	listen, set := os.LookupEnv("SRVEXEC_LISTEN")
-	// if set to "", it's ok : listen is optional
-	if !set {
-		listen = "127.0.0.1"
-	}
+	// Allow empty value, app.Listen don't require host
+	listen := common.Config.GetDefault("LISTEN", "127.0.0.1")
 
-	port, set := os.LookupEnv("SRVEXEC_PORT")
+	// Don't allow empty value, app.Listen require port
+	port, set := common.Config.GetSafe("PORT")
 	if !set || port == "" {
 		port = "8080"
 	}
 
+	common.LogInfo("Listening on " + listen + ":" + port)
 	common.LogFatal(app.Listen(listen + ":" + port).Error())
 }

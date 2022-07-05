@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/sha1"
 	"fmt"
-	"os"
 	"time"
 )
 
@@ -24,7 +23,7 @@ func GetTimeoutCtx(duration time.Duration) (context.Context, context.CancelFunc)
 // Retourne la durée du timeout défini dans l'environnement,
 // ou la durée par défaut (5 secondes)
 func GetTimeoutEnv() time.Duration {
-	tstr := os.Getenv("SRVEXEC_TIMEOUT")
+	tstr := Config.Get("TIMEOUT")
 
 	// convert to time.Duration
 	t, err := time.ParseDuration(tstr)

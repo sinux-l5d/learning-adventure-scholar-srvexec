@@ -1,5 +1,7 @@
 package common
 
+// fichier précédé d'un "3_" car il charge la configuration et initialise le niveau de logs
+
 import (
 	"os"
 	"strings"

@@ -1,5 +1,7 @@
 package common
 
+// Fichier précédé de "0_" car utilisé dans "logs"
+
 import "runtime"
 
 var (

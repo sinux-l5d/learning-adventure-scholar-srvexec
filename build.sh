@@ -27,7 +27,8 @@ logerr() {
 envExists() {
     [ ! -f "./environments/$1.go" ] && logerr "Missing environments/$1.go" && return 1
     lang="$(cut -d'-' -f1 <<<$1)"
-    [ ! -f "./languages/$lang.go" ] && logerr "Missing languages/$lang.go" && return 1
+    # Le proxy n'as pas de fichier de langage
+    [ ! -f "./languages/$lang.go" ] && [ $1 != "proxy" ] && logerr "Missing languages/$lang.go" && return 1
     return 0
 }
 
@@ -119,7 +120,7 @@ fi
 
 $RUN 
 if [ $? = 127 ]; then
-    logerr"Error: '$SUBCOMMAND' is not a known subcommand." >&2
+    logerr "Error: '$SUBCOMMAND' is not a known subcommand." >&2
     echo
     sub_help
     exit 1

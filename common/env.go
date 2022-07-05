@@ -24,7 +24,7 @@ func init() {
 	Config, err = godotenv.Read(configFilename)
 
 	if err != nil {
-		LogFatal("error loading environment" + err.Error())
+		LogWarn("error loading environment: " + err.Error())
 	}
 
 	// Remove prefix from keys

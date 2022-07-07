@@ -26,6 +26,7 @@ func Execute(code string) (string, error) {
 	ctx, cancel := common.GetTimeoutCtx(common.GetTimeoutEnv())
 	defer cancel()
 
+	common.LogInfo("Received code : " + common.WrapMultiline(code, "python"))
 	cmd := exec.CommandContext(ctx, "python", "-c", code)
 
 	out, err := cmd.CombinedOutput()
@@ -44,5 +45,6 @@ func Execute(code string) (string, error) {
 		common.LogError("Command error: %v | output: %s", err, common.WrapMultiline(string(out), "output"))
 	}
 
+	common.LogInfo("Execution success: " + common.WrapMultiline(string(out), "output"))
 	return string(out), err
 }

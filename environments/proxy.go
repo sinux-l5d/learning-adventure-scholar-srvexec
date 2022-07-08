@@ -57,6 +57,7 @@ func handleProxy(j common.ToHandle) (string, common.Status) {
 
 	// check if env is defined
 	if targetEnv == "" {
+		common.LogError("contexte.env is empty. contexte: " + string(j.Exercice.Contexte))
 		return "No env defined", common.ErrorInternal
 	}
 
@@ -88,6 +89,7 @@ func handleProxy(j common.ToHandle) (string, common.Status) {
 	bodyBuffer := bytes.NewReader(body)
 
 	common.LogDebug("forwarding request to " + targetEnv)
+	common.LogDebug("Forworded request: " + common.WrapMultiline(string(body), "request"))
 	httpResp, err := http.Post(executorsUrl[targetEnv]+"/exec", "application/json", bodyBuffer)
 
 	// Can't reach target env/executor

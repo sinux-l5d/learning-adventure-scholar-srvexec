@@ -4,7 +4,7 @@
 
 FROM golang:1.18.2-alpine3.16 as build
 
-ARG EXEC_ENV
+ARG EXEC_ENV=c-generic
 
 WORKDIR /app
 

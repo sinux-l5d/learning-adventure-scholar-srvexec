@@ -4,7 +4,7 @@
 
 FROM golang:1.18.2-alpine3.16 as build
 
-ARG EXEC_ENV
+ARG EXEC_ENV=proxy
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ RUN ./build.sh bin -l $EXEC_ENV
 ### ENV-SPECIFIC IMAGE ###
 ##########################
 
-FROM scratch
+FROM scratch as executor
 
 WORKDIR /app
 

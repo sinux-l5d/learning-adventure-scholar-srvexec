@@ -53,18 +53,10 @@ sub_container() {
 
         [ ! -f "./dockerfiles/$complete_env.dockerfile" ] && logerr "./dockerfiles/$complete_env.dockerfile doesn't exists!" && exit 1
 
-        log "Building binary container for ${complete_env}..."
-        docker build \
-            -t srvexec:bin-${complete_env} \
-            --build-arg EXEC_ENV=${complete_env} \
-            . || ( logerr "ERROR" && exit 1)
-
-        # if previous command failed, exit
-        [ $? -ne 0 ] && exit 1
-
-        log "Building executor container for ${complete_env}..."
+        log "Building container for ${complete_env}..."
         docker build \
             -t srvexec:${complete_env} \
+            --build-arg EXEC_ENV=${complete_env} \
             -f dockerfiles/$complete_env.dockerfile \
             . || ( logerr "ERROR" && exit 1)
     done

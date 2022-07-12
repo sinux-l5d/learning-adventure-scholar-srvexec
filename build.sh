@@ -27,7 +27,8 @@ logerr() {
 envExists() {
     [ ! -f "./environments/$1.go" ] && logerr "Missing environments/$1.go" && return 1
     lang="$(cut -d'-' -f1 <<<$1)"
-    [ ! -f "./languages/$lang.go" ] && logerr "Missing languages/$lang.go" && return 1
+    # Le proxy n'as pas de fichier de langage
+    [ ! -f "./languages/$lang.go" ] && [ $1 != "proxy" ] && logerr "Missing languages/$lang.go" && return 1
     return 0
 }
 
@@ -52,18 +53,10 @@ sub_container() {
 
         [ ! -f "./dockerfiles/$complete_env.dockerfile" ] && logerr "./dockerfiles/$complete_env.dockerfile doesn't exists!" && exit 1
 
-        log "Building binary container for ${complete_env}..."
-        docker build \
-            -t srvexec:bin-${complete_env} \
-            --build-arg EXEC_ENV=${complete_env} \
-            . || ( logerr "ERROR" && exit 1)
-
-        # if previous command failed, exit
-        [ $? -ne 0 ] && exit 1
-
-        log "Building executor container for ${complete_env}..."
+        log "Building container for ${complete_env}..."
         docker build \
             -t srvexec:${complete_env} \
+            --build-arg EXEC_ENV=${complete_env} \
             -f dockerfiles/$complete_env.dockerfile \
             . || ( logerr "ERROR" && exit 1)
     done
@@ -119,7 +112,7 @@ fi
 
 $RUN 
 if [ $? = 127 ]; then
-    logerr"Error: '$SUBCOMMAND' is not a known subcommand." >&2
+    logerr "Error: '$SUBCOMMAND' is not a known subcommand." >&2
     echo
     sub_help
     exit 1

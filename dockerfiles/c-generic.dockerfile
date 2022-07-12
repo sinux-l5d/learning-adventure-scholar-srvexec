@@ -1,9 +1,29 @@
-FROM srvexec:bin-c-generic as runtime
+##################
+### BASE IMAGE ###
+##################
+
+FROM golang:1.18.2-alpine3.16 as build
+
+ARG EXEC_ENV=c-generic
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify && apk add bash
+
+COPY . .
+RUN ./build.sh bin -l $EXEC_ENV
+
+
+##########################
+### ENV-SPECIFIC IMAGE ###
+##########################
+
 FROM gcc:12.1 as executor
 
 WORKDIR /app
 
-COPY --from=runtime /srvexec-c-generic ./srvexec-c-generic
+COPY --from=build /app/srvexec-c-generic ./srvexec-c-generic
 
 EXPOSE 8080
 

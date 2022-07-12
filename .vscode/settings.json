@@ -1,7 +1,7 @@
 {
-    "go.buildTags": "c_generic,libc",
+    "go.buildTags": "proxy,libproxy",
     "go.buildFlags": [
-        "-tags=c_generic,libc",
+        "-tags=proxy,libproxy",
     ],
     "docwriter.language": "French",
 }

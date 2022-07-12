@@ -4,7 +4,7 @@
 
 FROM golang:1.18.2-alpine3.16 as build
 
-ARG EXEC_ENV=python-generic
+ARG EXEC_ENV=proxy
 
 WORKDIR /app
 
@@ -19,15 +19,15 @@ RUN ./build.sh bin -l $EXEC_ENV
 ### ENV-SPECIFIC IMAGE ###
 ##########################
 
-FROM python:3.10-slim as executor
+FROM scratch as executor
 
 WORKDIR /app
 
-COPY --from=build /app/srvexec-python-generic ./srvexec-python-generic
+COPY --from=build /app/srvexec-proxy ./srvexec-proxy
 
 EXPOSE 8080
 
 ENV SRVEXEC_LISTEN=0.0.0.0
 ENV SRVEXEC_PORT=8080
-ENV SRVEXEC_TIMEOUT="5s"
-ENTRYPOINT [ "./srvexec-python-generic" ]
+
+ENTRYPOINT [ "./srvexec-proxy" ]

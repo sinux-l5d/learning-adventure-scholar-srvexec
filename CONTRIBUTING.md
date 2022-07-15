@@ -5,7 +5,7 @@
 Un environment utilise un langage dans un environnement d'exécution spécifique.
 Si l'on veut simplement executer le code d'un langage, on va créer un environnement générique pour ce langage.
 
-Par contre, si l'on peut exécuter du code python pour un cours de mathématiques, on va créer un environnement python-science contenant des paquets comme *numpy* ou *scipy*. Comme on ajoute des paquets, il se peut que la façon d'exécuter du code soit différente, on doit donc créer un fichier d'environnement en Go.
+Par contre, si l'on peut exécuter du code python pour un cours de mathématiques, on va créer un environnement python-science contenant des paquets comme *numpy* ou *scipy*. Comme on ajoute des paquets, il se peut que la façon d'exécuter du code soit différente, on doit donc créer un fichier d'environnement en Go. Celui-ci peut simplement rajouté les imports des paquets nécessaires.
 
 En résumé : 
 * Nouveau langage : un fichier dockerfile, un fichier de langage et un fichier d'environment générique.
@@ -16,7 +16,7 @@ En résumé :
 Remplacez LANGAGE par le nom du langage que vous souhaitez implémenter.
 
 1. Créez un fichier `LANGAGE.go` dans `languages/` contenant les fonctions généralement utiles pour ce langage (e.g.: en python, Indent pour indenter du code).
-2. Créer un fichier `LANGAGE_generic.go` dans `environments/` contenant le code minimal pour executer du code de ce langage. Il doit a minima définir une variable global MainEnvironment qui contient le nom de l'environnement (LANGAGE_generic) et la fonction à laquelle passer le code et l'exercice.
+2. Créer un fichier `LANGAGE-generic.go` dans `environments/` contenant le code minimal pour executer du code de ce langage. Il doit a minima définir une variable global MainEnvironment qui contient le nom de l'environnement (LANGAGE-generic) et la fonction à laquelle passer le code et l'exercice.
 
 ## Implémenter un nouvel environnement
 

@@ -17,7 +17,7 @@ Il faut d'abord compiler le binaire d'API pour le language de votre choix.
 Puis, l'importer dans l'image du language.
 
 ```bash
-./build.sh -l python
+./build.sh -l python-generic
 ```
 
 ## Lancer le conteneur
@@ -30,7 +30,19 @@ docker run --rm --name srvexec-python -p 8080:8080 srvexec:python
 
 Le header `Content-Type` est important.
 
+Exemple avec l'environnement `python-generic`:
+
 ```bash
-curl -X POST http://localhost:8080/exec -d '{"code": "print(f\"Hello {hex(3735928559)[2:]}, e^3={math.exp(3)}\")", "context": "import math"}' -H 'Content-Type: application/json' -s
+curl -X POST http://localhost:3005/exec -H 'Content-Type: application/json' -s -d @- << EOF 
+{
+    "code": "print(f\"Hello {hex(3735928559)[2:]}, e^3={exp(3)}\")", 
+    "exercice": {
+        "contexte": {
+            "env": "python-generic",
+            "beforeCode": "from math import exp\n"
+        }
+    }
+} 
+EOF
 ```
 

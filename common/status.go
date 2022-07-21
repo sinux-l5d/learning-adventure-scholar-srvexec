@@ -58,6 +58,7 @@ func StatusFromString(s string) Status {
 	case "error_internal":
 		return ErrorInternal
 	default:
+		LogDebug("unknown status: " + s)
 		return StatusUndefined
 	}
 }

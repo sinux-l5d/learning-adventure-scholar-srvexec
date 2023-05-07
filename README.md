@@ -1,6 +1,6 @@
 # Service d'Exécution
 
-Se service exécute du code informatique dans un langage parmis une liste implémentée.
+Ce service exécute du code informatique dans un langage parmi une liste implémentée.
 
 Il a besoin d'un Exercice (voir `common/structs.go`) et du code à exécuter.
 
